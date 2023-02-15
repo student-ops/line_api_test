@@ -1,9 +1,20 @@
-FROM golang:1.16-alpine
+# Use an official Node.js runtime as a parent image
+FROM node:16-alpine
 
+# Set the working directory to /app
 WORKDIR /app
 
-COPY . .
+# Copy the current directory contents into the container at /app
+COPY ./src /app
 
-RUN go mod init example.com/myapp && go build -o app
+# Install any needed packages specified in package.json
+RUN npm install
 
-CMD ["./app"]
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Define environment variable
+ENV NODE_ENV=production
+
+# Run the command to start the server
+CMD ["npm", "run", "start"]
