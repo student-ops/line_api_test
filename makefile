@@ -14,7 +14,7 @@ rebuild:
 run:
 	docker run  --name $(CONTAINER_NAME) -p $(PORT):$(PORT) $(IMAGE_TAG)
 
-.PHONY run-d
+.PHONY: run-d
 run-d:
 	docker run -d --name $(CONTAINER_NAME) -p $(PORT):$(PORT) $(IMAGE_TAG)
 
