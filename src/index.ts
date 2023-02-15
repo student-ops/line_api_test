@@ -2,6 +2,7 @@ import express from "express"
 import { Request, Response } from "express"
 import axios from "axios"
 import * as dotenv from "dotenv"
+import { GenerateMessage } from "./gptapi"
 
 interface WebhookRequest {
     destination: string
@@ -43,7 +44,8 @@ app.post("/", (req: Request, res: Response) => {
         for (const event of webhookRequest.events) {
             const replyToken = event.replyToken
             const messageText = event.message.text
-            sendRepeatMessage(replyToken, messageText)
+            GenerateMessage(messageText, res)
+            sendMessage(replyToken, messageText)
         }
         res.sendStatus(200)
     } catch (err) {
@@ -58,7 +60,7 @@ app.listen(webport, () => {
 })
 
 const CHANNEL_ACCESS_TOKEN = process.env.ChannelAccessToken
-async function sendRepeatMessage(replyToken: string, message: string) {
+async function sendMessage(replyToken: string, message: string) {
     const url = "https://api.line.me/v2/bot/message/reply"
     const headers = {
         "Content-Type": "application/json",
