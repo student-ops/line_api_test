@@ -52,8 +52,9 @@ app.post("/", (req: Request, res: Response) => {
     }
 })
 
-app.listen(80, () => {
-    console.log("Server started listening on port 80")
+const webport = 80
+app.listen(webport, () => {
+    console.log(`Server started listening on port ${webport}`)
 })
 
 const CHANNEL_ACCESS_TOKEN = process.env.ChannelAccessToken
