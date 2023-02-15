@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -49,8 +48,6 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 	for _, event := range req.Events {
 		replyToken := event.ReplyToken
 		messageText := event.Message.Text
-		fmt.Printf("Received reply token: %s\n", replyToken)
-		fmt.Printf("Received message text: %s\n", messageText)
 		sendMessage(replyToken, messageText)
 	}
 }
