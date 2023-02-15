@@ -81,7 +81,7 @@ async function sendRepeatMessage(replyToken: string, message: string) {
 
     try {
         const response = await axios.post(url, payload, { headers })
-        console.log("Response:", response.data)
+        console.log("Response:", response.status)
     } catch (error) {
         console.error("Error sending message:", error)
     }
