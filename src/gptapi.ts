@@ -3,8 +3,8 @@ import { Configuration, OpenAIApi } from "openai"
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 })
-const openai = new OpenAIApi(configuration)
 
+const openai = new OpenAIApi(configuration)
 export async function GenerateMessage(question: string) {
     try {
         const completion = await openai.createCompletion({
@@ -21,6 +21,7 @@ export async function GenerateMessage(question: string) {
         }
         return answer
     } catch (err) {
+        console.log(err)
         return "erorr"
     }
 }

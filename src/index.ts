@@ -63,14 +63,13 @@ app.listen(webport, () => {
     console.log(`Server started listening on port ${webport}`)
 })
 
-const CHANNEL_ACCESS_TOKEN = process.env.ChannelAccessToken
+const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN
 async function sendMessage(replyToken: string, message: string) {
     const url = "https://api.line.me/v2/bot/message/reply"
     const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
     }
-
     const payload = {
         replyToken: replyToken,
         messages: [
@@ -84,7 +83,6 @@ async function sendMessage(replyToken: string, message: string) {
             },
         ],
     }
-
     try {
         const response = await axios.post(url, payload, { headers })
         console.log("Response:", response.status)
