@@ -3,6 +3,7 @@ import { Request, Response } from "express"
 import axios from "axios"
 import * as dotenv from "dotenv"
 import { GenerateMessage } from "./gptapi"
+import { generateAndStoreUUID } from "./uuid"
 
 interface WebhookRequest {
     destination: string
@@ -91,17 +92,17 @@ async function Reply(replyToken: string, message: string) {
     }
 }
 //add error handle
-async function PushMessage(uuid: string, message: string) {
+async function PushMessage(userid: string, message: string) {
     const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
-        "X-Line-Retry-Key": "123e4567-e89b-12d3-a456-426614174000",
+        "X-Line-Retry-Key": generateAndStoreUUID(),
     }
 
     var url = "https://api.line.me/v2/bot/message/push"
     const payload = {
         //add group
-        to: uuid,
+        to: userid,
         messages: [
             {
                 type: "text",
