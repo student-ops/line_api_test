@@ -19,8 +19,10 @@ export async function GenerateMessage(question: string) {
         })
         var answer = ""
         if (completion.data.choices[0].text != undefined) {
-            answer = completion.data.choices[0].text
+            answer = completion.data.choices[0].text.slice(2)
             console.log(answer)
+            return answer
+        } else {
             return answer
         }
     } catch (err) {
@@ -28,3 +30,4 @@ export async function GenerateMessage(question: string) {
         return "erorr"
     }
 }
+GenerateMessage("hello world")

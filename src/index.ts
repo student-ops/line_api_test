@@ -48,6 +48,8 @@ app.post("/", async (req: Request, res: Response) => {
             if (answer == "error") {
                 sendMessage(replyToken, "error happen generat text")
                 sendMessage(replyToken, "error happen  generate text")
+                res.sendStatus(200)
+                return
             }
             sendMessage(replyToken, answer)
         }
