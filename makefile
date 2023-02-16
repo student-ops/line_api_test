@@ -11,7 +11,7 @@ rebuild:
 	docker build --no-cache -t $(IMAGE_TAG) .
 
 .PHONY: run
-run:
+run: down
 	docker run  --name $(CONTAINER_NAME) -it -p $(PORT):$(PORT) $(IMAGE_TAG)
 
 .PHONY: run-d
