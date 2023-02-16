@@ -31,7 +31,7 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 
-app.post("/", (req: Request, res: Response) => {
+app.post("/", async (req: Request, res: Response) => {
     const body = req.body
 
     if (!body) {
@@ -44,8 +44,13 @@ app.post("/", (req: Request, res: Response) => {
         for (const event of webhookRequest.events) {
             const replyToken = event.replyToken
             const messageText = event.message.text
-            GenerateMessage(messageText, res)
-            sendMessage(replyToken, messageText)
+            try {
+                var answer: string = await GenerateMessage(messageText)
+                sendMessage(replyToken, answer)
+            } catch (err) {
+                sendMessage(replyToken, "error happen generat text")
+                sendMessage(replyToken, "error happen  generate text")
+            }
         }
         res.sendStatus(200)
     } catch (err) {
