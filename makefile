@@ -26,7 +26,7 @@ down:
 
 .PHONY: rebuild_run
 rebuild_run:
-	git pull orign main
+	git pull origin main
 	make down
 	make rebuild
 	make run
