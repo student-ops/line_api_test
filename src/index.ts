@@ -44,13 +44,14 @@ app.post("/", async (req: Request, res: Response) => {
         for (const event of webhookRequest.events) {
             const replyToken = event.replyToken
             const messageText = event.message.text
+            const uuid = event.source.userId
             var answer = await GenerateMessage(messageText)
             if (answer == "error") {
                 Reply(replyToken, "error happen  generate text")
                 res.sendStatus(200)
                 return
             }
-            await PushMessage(replyToken, "generating🐣")
+            await PushMessage(uuid, "generating🐣")
             await Reply(replyToken, answer)
         }
         res.sendStatus(200)
