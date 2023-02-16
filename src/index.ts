@@ -44,13 +44,12 @@ app.post("/", async (req: Request, res: Response) => {
         for (const event of webhookRequest.events) {
             const replyToken = event.replyToken
             const messageText = event.message.text
-            try {
-                var answer: string = await GenerateMessage(messageText)
-                sendMessage(replyToken, answer)
-            } catch (err) {
+            var answer = await GenerateMessage(messageText)
+            if (answer == "error") {
                 sendMessage(replyToken, "error happen generat text")
                 sendMessage(replyToken, "error happen  generate text")
             }
+            sendMessage(replyToken, answer)
         }
         res.sendStatus(200)
     } catch (err) {

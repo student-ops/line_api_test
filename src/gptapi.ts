@@ -21,6 +21,6 @@ export async function GenerateMessage(question: string) {
         }
         return answer
     } catch (err) {
-        return err
+        return "erorr"
     }
 }
