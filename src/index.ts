@@ -52,7 +52,7 @@ app.post("/", async (req: Request, res: Response) => {
                 res.sendStatus(200)
                 return
             }
-            await PushMessage(uuid, "generating🐣")
+            PushMessage(uuid, "generating...🐣")
             await Reply(replyToken, answer)
         }
         res.sendStatus(200)
