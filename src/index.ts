@@ -46,13 +46,12 @@ app.post("/", async (req: Request, res: Response) => {
             const messageText = event.message.text
             var answer = await GenerateMessage(messageText)
             if (answer == "error") {
-                sendMessage(replyToken, "error happen generat text")
-                sendMessage(replyToken, "error happen  generate text")
+                Reply(replyToken, "error happen  generate text")
                 res.sendStatus(200)
                 return
             }
-            await sendMessage(replyToken, "generatig")
-            await sendMessage(replyToken, answer)
+            await PushMessage(replyToken, "generating🐣")
+            await Reply(replyToken, answer)
         }
         res.sendStatus(200)
     } catch (err) {
@@ -67,7 +66,7 @@ app.listen(webport, () => {
 })
 
 const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN
-async function sendMessage(replyToken: string, message: string) {
+async function Reply(replyToken: string, message: string) {
     const url = "https://api.line.me/v2/bot/message/reply"
     const headers = {
         "Content-Type": "application/json",
@@ -82,6 +81,33 @@ async function sendMessage(replyToken: string, message: string) {
             },
         ],
     }
+    try {
+        const response = await axios.post(url, payload, { headers })
+        console.log("Response:", response.status)
+    } catch (error) {
+        console.error("Error sending message:", error)
+    }
+}
+//add error handle
+async function PushMessage(uuid: string, message: string) {
+    const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
+        "X-Line-Retry-Key": uuid,
+    }
+
+    var url = "https://api.line.me/v2/bot/message/push"
+    const payload = {
+        //add group
+        to: uuid,
+        messages: [
+            {
+                type: "text",
+                text: message,
+            },
+        ],
+    }
+
     try {
         const response = await axios.post(url, payload, { headers })
         console.log("Response:", response.status)
