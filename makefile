@@ -23,4 +23,10 @@ down:
 	docker rm -f $(CONTAINER_NAME)
 
 .PHONY: rebuild_run
-rebuild_run: down rebuild run
+
+.PHONY: rebuild_run
+rebuild_run:
+	git pull orign main
+	make down
+	make rebuild
+	make run
