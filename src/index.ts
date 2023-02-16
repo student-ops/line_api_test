@@ -47,7 +47,7 @@ app.post("/", async (req: Request, res: Response) => {
             const messageText = event.message.text
             const uuid = event.source.userId
 
-            PushMessage(uuid, "generating...🐣")
+            PushMessage(uuid, "generating🍏🍇")
             var answer = await GenerateMessage(messageText)
             if (answer == "error") {
                 Reply(replyToken, "error happen  generate text")
