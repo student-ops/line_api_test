@@ -51,7 +51,8 @@ app.post("/", async (req: Request, res: Response) => {
                 res.sendStatus(200)
                 return
             }
-            sendMessage(replyToken, answer)
+            await sendMessage(replyToken, "generatig")
+            await sendMessage(replyToken, answer)
         }
         res.sendStatus(200)
     } catch (err) {
@@ -75,10 +76,6 @@ async function sendMessage(replyToken: string, message: string) {
     const payload = {
         replyToken: replyToken,
         messages: [
-            {
-                type: "text",
-                text: "replying message",
-            },
             {
                 type: "text",
                 text: message,

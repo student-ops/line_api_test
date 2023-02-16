@@ -12,11 +12,11 @@ rebuild:
 
 .PHONY: run
 run:
-	docker run  --name $(CONTAINER_NAME) -p $(PORT):$(PORT) $(IMAGE_TAG)
+	docker run  --name $(CONTAINER_NAME) -it -p $(PORT):$(PORT) $(IMAGE_TAG)
 
 .PHONY: run-d
 run-d:
-	docker run -d --name $(CONTAINER_NAME) -p $(PORT):$(PORT) $(IMAGE_TAG)
+	docker run -d --name $(CONTAINER_NAME) -it -p $(PORT):$(PORT) $(IMAGE_TAG)
 
 .PHONY: down
 down:
