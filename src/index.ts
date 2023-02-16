@@ -45,6 +45,7 @@ app.post("/", async (req: Request, res: Response) => {
             const replyToken = event.replyToken
             const messageText = event.message.text
             const uuid = event.source.userId
+
             var answer = await GenerateMessage(messageText)
             if (answer == "error") {
                 Reply(replyToken, "error happen  generate text")
@@ -94,7 +95,7 @@ async function PushMessage(uuid: string, message: string) {
     const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
-        "X-Line-Retry-Key": uuid,
+        "X-Line-Retry-Key": "123e4567-e89b-12d3-a456-426614174000",
     }
 
     var url = "https://api.line.me/v2/bot/message/push"
