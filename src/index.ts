@@ -46,17 +46,17 @@ app.post("/", async (req: Request, res: Response) => {
         for (const event of webhookRequest.events) {
             const replyToken = event.replyToken
             const messageText = event.message.text
-            const uuid = event.source.userId
+            const userid = event.source.userId
             console.log("-----------------------------------")
             console.log(event)
             console.log("-----------------------------------")
 
-            PushMessage(uuid, "generating🍏🍇")
+            PushMessage(userid, "generating🍏🍇")
             interval = setInterval(() => {
-                PushMessage(uuid, "generating🍏🍇")
+                PushMessage(userid, "generating🍏🍇")
             }, 4000) // execute every 3 seconds
 
-            var answer = await GenerateMessage(messageText)
+            var answer = await GenerateMessage(messageText, userid)
             clearInterval(interval) // stop interval
             if (answer == "error") {
                 Reply(replyToken, "error happen between generate text")

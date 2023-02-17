@@ -8,13 +8,15 @@ const configuration = new Configuration({
 })
 
 const openai = new OpenAIApi(configuration)
-export async function GenerateMessage(question: string) {
+export async function GenerateMessage(question: string, uuid) {
     try {
         const completion = await openai.createCompletion({
             model: "text-davinci-003",
             prompt: question,
             max_tokens: 300,
             temperature: 0.6,
+            best_of: 4,
+            user: uuid,
         })
         var answer = ""
         if (completion.data.choices[0].text != undefined) {
