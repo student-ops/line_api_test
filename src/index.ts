@@ -42,15 +42,20 @@ app.post("/", async (req: Request, res: Response) => {
 
     try {
         const webhookRequest: WebhookRequest = body
+        let intervalId: NodeJS.Timeout
         for (const event of webhookRequest.events) {
             const replyToken = event.replyToken
             const messageText = event.message.text
             const uuid = event.source.userId
 
-            PushMessage(uuid, "generating🍏🍇")
+            intervalId = setInterval(() => {
+                PushMessage(uuid, "generating🍏🍇")
+            }, 3000) // execute every 3 seconds
+
             var answer = await GenerateMessage(messageText)
+            clearInterval(intervalId) // stop interval
             if (answer == "error") {
-                Reply(replyToken, "error happen  generate text")
+                Reply(replyToken, "error happen between generate text")
                 res.sendStatus(200)
                 return
             }
@@ -63,7 +68,7 @@ app.post("/", async (req: Request, res: Response) => {
     }
 })
 
-const webport = 80
+const webport = process.env.WEB_PORT
 app.listen(webport, () => {
     console.log(`Server started listening on port ${webport}`)
 })
