@@ -103,10 +103,12 @@ async function Reply(replyToken: string, message: string) {
 }
 //add error handle
 async function PushMessage(userid: string, message: string) {
+    var uuid = await generateAndStoreUUID()
+    console.log(uuid)
     const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
-        "X-Line-Retry-Key": await generateAndStoreUUID(),
+        "X-Line-Retry-Key": uuid,
     }
 
     var url = "https://api.line.me/v2/bot/message/push"
