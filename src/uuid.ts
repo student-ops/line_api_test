@@ -1,7 +1,7 @@
 import fs from "fs"
 import { v4 as uuidv4 } from "uuid"
 
-const filename = "uuid.txt"
+const filename = "uuidr.txt"
 
 export function generateAndStoreUUID(): string {
     let uuid: string
