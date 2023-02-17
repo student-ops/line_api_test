@@ -18,7 +18,7 @@ export async function GenerateMessage(question: string) {
         })
         var answer = ""
         if (completion.data.choices[0].text != undefined) {
-            answer = completion.data.choices[0].text.slice(2)
+            answer = completion.data.choices[0].text.replace(/^\s+/, "")
             console.log(answer)
             return answer
         } else {

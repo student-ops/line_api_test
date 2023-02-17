@@ -1,15 +1,7 @@
-// async/awaitの場合
-const promiseFunc = (value) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(value), 1000)
-    })
-}
+const text = "   \n  Hello, world!  \n"
 
-async function asyncFunc() {
-    console.log(await promiseFunc(1))
-    console.log(await promiseFunc(2))
-    console.log(await promiseFunc(3))
-}
+// 先頭からスペースと改行を除去する
+const cleanedText = text.replace(/^\s+/, "")
 
-asyncFunc()
-asyncFunc()
+console.log(cleanedText)
+// 出力: "Hello, world!  \n"
