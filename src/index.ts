@@ -51,9 +51,10 @@ app.post("/", async (req: Request, res: Response) => {
             console.log(event)
             console.log("-----------------------------------")
 
+            PushMessage(uuid, "generating🍏🍇")
             interval = setInterval(() => {
                 PushMessage(uuid, "generating🍏🍇")
-            }, 5000) // execute every 3 seconds
+            }, 4000) // execute every 3 seconds
 
             var answer = await GenerateMessage(messageText)
             clearInterval(interval) // stop interval
