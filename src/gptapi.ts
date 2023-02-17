@@ -8,7 +8,7 @@ const configuration = new Configuration({
 })
 
 const openai = new OpenAIApi(configuration)
-export async function GenerateMessage(question: string, uuid) {
+export async function GenerateMessage(question: string, uuid: string) {
     try {
         const completion = await openai.createCompletion({
             model: "text-davinci-003",
