@@ -105,7 +105,7 @@ async function PushMessage(userid: string, message: string) {
     const headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
-        "X-Line-Retry-Key": generateAndStoreUUID(),
+        "X-Line-Retry-Key": await generateAndStoreUUID(),
     }
 
     var url = "https://api.line.me/v2/bot/message/push"

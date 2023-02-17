@@ -32,3 +32,6 @@ export function generateAndStoreUUID(): string {
 
     return uuid
 }
+
+var a = generateAndStoreUUID()
+console.log(a)
