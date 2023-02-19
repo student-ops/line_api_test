@@ -1,4 +1,4 @@
-import express from "express"
+import * as express from "express"
 import * as dotenv from "dotenv"
 import * as axios from "axios"
 import * as line from "@line/bot-sdk"
@@ -18,7 +18,7 @@ const config = {
     channelSecret: c,
 }
 
-const app = express()
+const app = express.default()
 app.post("/webhook", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
         res.json(result)
