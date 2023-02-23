@@ -19,7 +19,7 @@ const config = {
 }
 console.log("line api sdk in line-index.ts")
 
-const app = express.default()
+const app = express()
 app.post("/webhook", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
         res.json(result)
