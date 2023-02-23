@@ -49,6 +49,9 @@ async function GptNormalflow(
     replyToken: string,
     question: string
 ) {
+    console.log("-------------------------------------")
+    console.log(question + " " + target! + " " + replyToken)
+    console.log("-------------------------------------")
     let interval: NodeJS.Timeout
     client.pushMessage(target!, {
         type: "text",
@@ -60,7 +63,6 @@ async function GptNormalflow(
             text: "generating🍏🍇",
         })
     }, 4000)
-    console.log(question + " " + target! + " " + replyToken)
     const answer = await GenerateMessage(question, target!)
     client.replyMessage(replyToken, {
         type: "text",
