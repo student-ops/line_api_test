@@ -60,12 +60,13 @@ async function GptNormalflow(
             text: "generating🍏🍇",
         })
     }, 4000)
-
+    console.log(question + " " + target! + " " + replyToken)
     const answer = await GenerateMessage(question, target!)
     client.replyMessage(replyToken, {
         type: "text",
         text: answer,
     })
+
     return
 }
 
