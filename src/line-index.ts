@@ -3,6 +3,7 @@ import * as dotenv from "dotenv"
 import * as axios from "axios"
 import * as line from "@line/bot-sdk"
 import { GenerateMessage } from "./gptapi"
+import { GenerateImg } from "./dalle-api"
 import { appendFile } from "fs"
 
 dotenv.config()
@@ -36,20 +37,28 @@ async function handleEvent(event: line.WebhookEvent) {
 
     if (event.message.text.indexOf("ジピ") === 0) {
         const question = event.message.text.slice(2)
-        await GptNormalflow(target!, event.replyToken, question)
+        await GptNormalflow(target!, event.replyToken, question, "gpt")
         return
     }
-
-    return client.replyMessage(event.replyToken, {
-        type: "text",
-        text: event.message.text,
-    })
+    if (event.message.text.indexOf("ダリ") === 0) {
+        const question = event.message.text.slice(2)
+        return
+    }
+    if (event.message.text === "ping") {
+        client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "pong",
+        })
+        return
+    }
+    return
 }
 
 async function GptNormalflow(
     target: string,
     replyToken: string,
-    question: string
+    question: string,
+    ai: string
 ) {
     let interval: NodeJS.Timeout
     try {
@@ -63,17 +72,18 @@ async function GptNormalflow(
                 text: "generating🍏🍇",
             })
         }, 4000)
-        const answer = await GenerateMessage(question, target!)
+        if (ai == "gpt") {
+            const answer = await GenerateMessage(question, target!)
+            console.log("-------------------------------------")
+            console.log(question + " " + target! + " " + replyToken)
+            console.log("answer: " + answer)
+            console.log("-------------------------------------")
 
-        console.log("-------------------------------------")
-        console.log(question + " " + target! + " " + replyToken)
-        console.log("-------------------------------------")
-        console.log("answer: " + answer)
-
-        await client.replyMessage(replyToken, {
-            type: "text",
-            text: answer,
-        })
+            await client.replyMessage(replyToken, {
+                type: "text",
+                text: answer,
+            })
+        }
     } catch (err) {
         console.error(err)
     } finally {
