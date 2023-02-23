@@ -42,12 +42,12 @@ async function handleEvent(event: line.WebhookEvent) {
         if (event.source.type == "group") {
             uuid = event.source.groupId!
         }
-        const answer = await GenerateMessage(question, uuid!)
-        console.log("uuid: " + uuid)
         client.pushMessage(uuid!, {
             type: "text",
             text: "gentrating🍏🍇",
         })
+        const answer = await GenerateMessage(question, uuid!)
+        console.log("uuid: " + uuid)
         return client.replyMessage(event.replyToken, {
             type: "text",
             text: answer,
