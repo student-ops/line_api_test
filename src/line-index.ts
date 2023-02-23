@@ -44,6 +44,10 @@ async function handleEvent(event: line.WebhookEvent) {
         }
         const answer = await GenerateMessage(question, uuid!)
         console.log("uuid: " + uuid)
+        client.pushMessage(uuid!, {
+            type: "text",
+            text: "hello",
+        })
         return client.replyMessage(event.replyToken, {
             type: "text",
             text: answer,
