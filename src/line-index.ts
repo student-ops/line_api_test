@@ -16,14 +16,13 @@ const config = {
     channelAccessToken: a,
     channelSecret: c,
 }
-
+const client = new line.Client(config)
 const app = express()
 app.post("/webhook", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
         res.json(result)
     )
 })
-const client = new line.Client(config)
 
 async function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
@@ -63,10 +62,11 @@ async function GptNormalflow(
     }, 4000)
 
     const answer = await GenerateMessage(question, target!)
-    return client.replyMessage(replyToken, {
+    client.replyMessage(replyToken, {
         type: "text",
         text: answer,
     })
+    return
 }
 
 console.log("line api sdk in line-index.ts")
