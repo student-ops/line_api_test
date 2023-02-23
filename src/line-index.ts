@@ -64,10 +64,15 @@ async function GptNormalflow(
         })
     }, 4000)
     const answer = await GenerateMessage(question, target!)
-    await client.replyMessage(replyToken, {
-        type: "text",
-        text: answer,
-    })
+    await client
+        .replyMessage(replyToken, {
+            type: "text",
+            text: answer,
+        })
+        .catch((err) => {
+            console.log("error happen in reply message")
+            console.log(err.originalError.response.dat)
+        })
     clearInterval(interval)
     return
 }
