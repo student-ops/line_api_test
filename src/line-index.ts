@@ -58,7 +58,7 @@ async function GptNormalflow(
         text: "generating🍏🍇",
     })
     interval = setInterval(async () => {
-        await client.pushMessage(target!, {
+        client.pushMessage(target!, {
             type: "text",
             text: "generating🍏🍇",
         })
