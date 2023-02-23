@@ -17,6 +17,7 @@ const config = {
     channelAccessToken: a,
     channelSecret: c,
 }
+console.log("line api sdk in line-index.ts")
 
 const app = express.default()
 app.post("/webhook", line.middleware(config), (req, res) => {
