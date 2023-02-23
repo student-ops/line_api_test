@@ -1,4 +1,4 @@
-import * as express from "express"
+import express from "express"
 import * as dotenv from "dotenv"
 import * as axios from "axios"
 import * as line from "@line/bot-sdk"
