@@ -1,7 +1,7 @@
-import express from "express"
-import dotenv from "dotenv"
-import axios from "axios"
-import line from "@line/bot-sdk"
+import * as express from "express"
+import * as dotenv from "dotenv"
+import * as axios from "axios"
+import * as line from "@line/bot-sdk"
 import { GenerateMessage } from "./gptapi"
 import { generateAndStoreUUID } from "./uuid"
 import { appendFile } from "fs"
@@ -18,8 +18,7 @@ const config = {
     channelSecret: c,
 }
 
-console.log("using line sdk one line-index.ts")
-const app = express()
+const app = express.default()
 app.post("/webhook", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
         res.json(result)
@@ -30,12 +29,6 @@ const client = new line.Client(config)
 function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
-    }
-    if (event.message.text[0] === "a") {
-        return client.replyMessage(event.replyToken, {
-            type: "text",
-            text: "true " + event.message.text,
-        })
     }
 
     return client.replyMessage(event.replyToken, {
