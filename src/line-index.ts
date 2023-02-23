@@ -30,12 +30,7 @@ async function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
     }
-    if (event.message.text == "a") {
-        return client.replyMessage(event.replyToken, {
-            type: "text",
-            text: "よるですよ",
-        })
-    }
+    // check group or not
     if (event.message.text.indexOf("ジピ") === 0) {
         const question = event.message.text.slice(4)
         var uuid = event.source.userId
