@@ -26,7 +26,7 @@ app.post("/webhook", line.middleware(config), (req, res) => {
 })
 const client = new line.Client(config)
 
-function handleEvent(event: line.WebhookEvent) {
+async function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
     }
@@ -34,6 +34,19 @@ function handleEvent(event: line.WebhookEvent) {
         return client.replyMessage(event.replyToken, {
             type: "text",
             text: "よるですよ",
+        })
+    }
+    if (event.message.text.indexOf("ジピ") === 0) {
+        const question = event.message.text.slice(4)
+        var uuid = event.source.userId
+        if (event.source.type == "group") {
+            uuid = event.source.groupId!
+        }
+        const answer = await GenerateMessage(question, uuid!)
+        console.log("uuid: " + uuid)
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: answer,
         })
     }
 
