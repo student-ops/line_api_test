@@ -1,7 +1,7 @@
-import * as express from "express"
-import * as dotenv from "dotenv"
-import * as axios from "axios"
-import * as line from "@line/bot-sdk"
+import express from "express"
+import dotenv from "dotenv"
+import axios from "axios"
+import line from "@line/bot-sdk"
 import { GenerateMessage } from "./gptapi"
 import { generateAndStoreUUID } from "./uuid"
 import { appendFile } from "fs"
@@ -18,7 +18,7 @@ const config = {
     channelSecret: c,
 }
 
-const app = express.default()
+const app = express()
 app.post("/webhook", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
         res.json(result)
