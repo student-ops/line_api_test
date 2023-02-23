@@ -37,6 +37,7 @@ async function handleEvent(event: line.WebhookEvent) {
     if (event.message.text.indexOf("ジピ") === 0) {
         const question = event.message.text.slice(2)
         await GptNormalflow(target!, event.replyToken, question)
+        return
     }
 
     return client.replyMessage(event.replyToken, {
