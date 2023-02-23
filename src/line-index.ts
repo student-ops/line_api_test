@@ -18,6 +18,7 @@ const config = {
     channelSecret: c,
 }
 
+console.log("using line sdk one line-index.ts")
 const app = express()
 app.post("/webhook", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
