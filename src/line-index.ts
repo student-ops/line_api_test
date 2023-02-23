@@ -3,7 +3,6 @@ import * as dotenv from "dotenv"
 import * as axios from "axios"
 import * as line from "@line/bot-sdk"
 import { GenerateMessage } from "./gptapi"
-import { generateAndStoreUUID } from "./uuid"
 import { appendFile } from "fs"
 
 dotenv.config()
@@ -30,28 +29,43 @@ async function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
     }
+    var target: string
+    if (event.source.type == "user") target = event.source.userId
+    if (event.source.type == "group") target = event.source.groupId!
+    console.log("target: " + target!)
     // check group or not
+
     if (event.message.text.indexOf("ジピ") === 0) {
-        const question = event.message.text.slice(4)
-        var uuid = event.source.userId
-        if (event.source.type == "group") {
-            uuid = event.source.groupId!
-        }
-        client.pushMessage(uuid!, {
-            type: "text",
-            text: "gentrating🍏🍇",
-        })
-        const answer = await GenerateMessage(question, uuid!)
-        console.log("uuid: " + uuid)
-        return client.replyMessage(event.replyToken, {
-            type: "text",
-            text: answer,
-        })
+        const question = event.message.text.slice(2)
+        await GptNormalflow(target!, event.replyToken, question)
     }
 
     return client.replyMessage(event.replyToken, {
         type: "text",
         text: event.message.text,
+    })
+}
+async function GptNormalflow(
+    target: string,
+    replyToken: string,
+    question: string
+) {
+    let interval: NodeJS.Timeout
+    client.pushMessage(target!, {
+        type: "text",
+        text: "generating🍏🍇",
+    })
+    interval = setInterval(() => {
+        client.pushMessage(target!, {
+            type: "text",
+            text: "generating🍏🍇",
+        })
+    }, 4000)
+
+    const answer = await GenerateMessage(question, target!)
+    return client.replyMessage(replyToken, {
+        type: "text",
+        text: answer,
     })
 }
 
