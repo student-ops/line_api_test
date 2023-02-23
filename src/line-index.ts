@@ -44,38 +44,40 @@ async function handleEvent(event: line.WebhookEvent) {
         text: event.message.text,
     })
 }
+
 async function GptNormalflow(
     target: string,
     replyToken: string,
     question: string
 ) {
     let interval: NodeJS.Timeout
-    await client.pushMessage(target!, {
-        type: "text",
-        text: "generating🍏🍇",
-    })
-    interval = setInterval(async () => {
-        client.pushMessage(target!, {
+    try {
+        await client.pushMessage(target!, {
             type: "text",
             text: "generating🍏🍇",
         })
-    }, 4000)
-    const answer = await GenerateMessage(question, target!)
+        interval = setInterval(async () => {
+            await client.pushMessage(target!, {
+                type: "text",
+                text: "generating🍏🍇",
+            })
+        }, 4000)
+        const answer = await GenerateMessage(question, target!)
 
-    console.log("-------------------------------------")
-    console.log(question + " " + target! + " " + replyToken)
-    console.log("-------------------------------------")
-    console.log("answer: " + answer)
-    await client
-        .replyMessage(replyToken, {
+        console.log("-------------------------------------")
+        console.log(question + " " + target! + " " + replyToken)
+        console.log("-------------------------------------")
+        console.log("answer: " + answer)
+
+        await client.replyMessage(replyToken, {
             type: "text",
             text: answer,
         })
-        .catch((err) => {
-            console.log("error happen in reply message")
-            console.log(err.originalError.response.dat)
-        })
-    clearInterval(interval)
+    } catch (err) {
+        console.error(err)
+    } finally {
+        clearInterval(interval!)
+    }
     return
 }
 
