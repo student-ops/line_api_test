@@ -17,7 +17,6 @@ const config = {
     channelAccessToken: a,
     channelSecret: c,
 }
-console.log("line api sdk in line-index.ts")
 
 const app = express()
 app.post("/webhook", line.middleware(config), (req, res) => {
@@ -31,6 +30,12 @@ function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
     }
+    if (event.message.text == "a") {
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "よるですよ",
+        })
+    }
 
     return client.replyMessage(event.replyToken, {
         type: "text",
@@ -38,5 +43,6 @@ function handleEvent(event: line.WebhookEvent) {
     })
 }
 
+console.log("line api sdk in line-index.ts")
 console.log("app litening on port" + web_port)
 app.listen(web_port)
