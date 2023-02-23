@@ -30,6 +30,12 @@ function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
     }
+    if (event.message.text[0] === "a") {
+        return client.replyMessage(event.replyToken, {
+            type: "text",
+            text: "true " + event.message.text,
+        })
+    }
 
     return client.replyMessage(event.replyToken, {
         type: "text",
