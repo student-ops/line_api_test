@@ -31,7 +31,7 @@ async function handleEvent(event: line.WebhookEvent) {
     var target: string
     if (event.source.type == "user") target = event.source.userId
     if (event.source.type == "group") target = event.source.groupId!
-    console.log("target: " + target!)
+    // console.log("target: " + target!)
     // check group or not
 
     if (event.message.text.indexOf("ジピ") === 0) {
@@ -49,9 +49,6 @@ async function GptNormalflow(
     replyToken: string,
     question: string
 ) {
-    console.log("-------------------------------------")
-    console.log(question + " " + target! + " " + replyToken)
-    console.log("-------------------------------------")
     let interval: NodeJS.Timeout
     await client.pushMessage(target!, {
         type: "text",
@@ -64,6 +61,11 @@ async function GptNormalflow(
         })
     }, 4000)
     const answer = await GenerateMessage(question, target!)
+
+    console.log("-------------------------------------")
+    console.log(question + " " + target! + " " + replyToken)
+    console.log("-------------------------------------")
+    console.log("answer: " + answer)
     await client
         .replyMessage(replyToken, {
             type: "text",
