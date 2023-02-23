@@ -46,7 +46,7 @@ async function handleEvent(event: line.WebhookEvent) {
         console.log("uuid: " + uuid)
         client.pushMessage(uuid!, {
             type: "text",
-            text: "hello",
+            text: "gentrating🍏🍇",
         })
         return client.replyMessage(event.replyToken, {
             type: "text",
