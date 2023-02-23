@@ -68,7 +68,7 @@ async function GptNormalflow(
         type: "text",
         text: answer,
     })
-
+    clearInterval(interval)
     return
 }
 
