@@ -8,7 +8,8 @@ WORKDIR /app
 COPY ./src /app
 
 # Install any needed packages specified in package.json
-RUN npm install
+
+RUN npm install -g npm@9.5.1
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
