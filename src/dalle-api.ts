@@ -10,7 +10,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration)
 
-export async function GenerateImg(prompt: string) {
+export async function GenerateImg(prompt: string): Promise<string> {
     try {
         const response = await openai.createImage({
             prompt: prompt,
@@ -19,6 +19,7 @@ export async function GenerateImg(prompt: string) {
             response_format: "url",
         })
         console.log(response.data.data[0].url)
+        return response.data.data[0].url!
         // var imgedata = response.data.data[0].b64_json!.replace(
         //     "data:image/jpeg;base64,",
         //     ""
@@ -31,14 +32,13 @@ export async function GenerateImg(prompt: string) {
         //     },
         //     (err) => {
         //         if (err) {
-        //             console.log("error heapen in generate img")
-        //         } else {
+        //             console.log("err
         //             console.log("success")
         //         }
         //     }
         // )
     } catch {
         console.log("error heapen in generate img")
+        return "error happen"
     }
-    return
 }

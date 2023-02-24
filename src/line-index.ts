@@ -86,11 +86,11 @@ async function GptNormalflow(
             })
         }
         if (ai == "dalle") {
-            const answer = "generate"
-            await GenerateImg(question)
+            var url: string = await GenerateImg(question)
             await client.replyMessage(replyToken, {
-                type: "text",
-                text: answer,
+                type: "image",
+                originalContentUrl: url,
+                previewImageUrl: url,
             })
         }
     } catch (err) {
