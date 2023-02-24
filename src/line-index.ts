@@ -87,6 +87,7 @@ async function GptNormalflow(
         }
         if (ai == "dalle") {
             const answer = "generate"
+            GenerateImg(question)
             await client.replyMessage(replyToken, {
                 type: "text",
                 text: answer,
