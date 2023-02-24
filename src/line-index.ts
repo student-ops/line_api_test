@@ -42,6 +42,7 @@ async function handleEvent(event: line.WebhookEvent) {
     }
     if (event.message.text.indexOf("ダリ") === 0) {
         const question = event.message.text.slice(2)
+        await GptNormalflow(target!, event.replyToken, question, "dalle")
         return
     }
     if (event.message.text === "ping") {
@@ -79,6 +80,13 @@ async function GptNormalflow(
             console.log("answer: " + answer)
             console.log("-------------------------------------")
 
+            await client.replyMessage(replyToken, {
+                type: "text",
+                text: answer,
+            })
+        }
+        if (ai == "dalle") {
+            const answer = "generate"
             await client.replyMessage(replyToken, {
                 type: "text",
                 text: answer,
