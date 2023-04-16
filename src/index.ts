@@ -39,6 +39,7 @@ app.listen(webport, () => {
 })
 
 app.post("/", async (req: Request, res: Response) => {
+    console.log("reached")
     const body = req.body
 
     if (!body) {

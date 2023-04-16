@@ -19,7 +19,7 @@ const config = {
 }
 const client = new line.Client(config)
 const app = express()
-app.post("/webhook", line.middleware(config), (req, res) => {
+app.post("/", line.middleware(config), (req, res) => {
     Promise.all(req.body.events.map(handleEvent)).then((result) =>
         res.json(result)
     )
@@ -51,6 +51,11 @@ async function handleEvent(event: line.WebhookEvent) {
             text: "pong",
         })
         return
+    } else {
+        client.replyMessage(event.replyToken, {
+            type: "text",
+            text: event.message.text,
+        })
     }
     return
 }
