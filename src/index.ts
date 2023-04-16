@@ -28,9 +28,15 @@ interface SourceRequest {
     userId: string
 }
 
+const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN
 dotenv.config()
 const app = express()
 app.use(express.json())
+
+const webport = process.env.WEB_PORT
+app.listen(webport, () => {
+    console.log(`Server started listening on port ${webport}`)
+})
 
 app.post("/", async (req: Request, res: Response) => {
     const body = req.body
@@ -73,12 +79,6 @@ app.post("/", async (req: Request, res: Response) => {
     }
 })
 
-const webport = process.env.WEB_PORT
-app.listen(webport, () => {
-    console.log(`Server started listening on port ${webport}`)
-})
-
-const CHANNEL_ACCESS_TOKEN = process.env.CHANNEL_ACCESS_TOKEN
 async function Reply(replyToken: string, message: string) {
     const url = "https://api.line.me/v2/bot/message/reply"
     const headers = {

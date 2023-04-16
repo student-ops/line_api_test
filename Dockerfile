@@ -13,7 +13,7 @@ RUN npm install -g npm@9.5.1 -y
 RUN npm install
 
 # Make port 80 available to the world outside this container
-EXPOSE 80
+EXPOSE 8081
 
 # Define environment variable
 ENV NODE_ENV=production
