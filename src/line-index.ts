@@ -25,6 +25,10 @@ app.post("/webhook", line.middleware(config), (req, res) => {
     )
 })
 
+app.get("/webhook/check", (req, res) => {
+    res.send("hello")
+})
+
 async function handleEvent(event: line.WebhookEvent) {
     if (event.type !== "message" || event.message.type !== "text") {
         return Promise.resolve(null)
